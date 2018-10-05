@@ -1,6 +1,7 @@
+
 /**
  * @author Konstantin
  */
-public class Termin {
+public class Appointment {
 
 }
