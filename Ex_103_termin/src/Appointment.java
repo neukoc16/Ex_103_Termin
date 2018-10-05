@@ -2,9 +2,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * @author Konstantin
- */
 public class Appointment {
 
     private LocalDateTime date;
@@ -35,5 +32,4 @@ public class Appointment {
     public String toString() {
         return String.format("%s ---> %s", date.format(DateTimeFormatter.ofPattern("dd.MM.yyy - HH.mm")), text);
     }
-
 }

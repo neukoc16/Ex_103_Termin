@@ -10,9 +10,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
-/**
- * @author Konstantin
- */
 public class AppointmentModel extends AbstractListModel {
 
     private ArrayList<Appointment> appointments = new ArrayList<>();

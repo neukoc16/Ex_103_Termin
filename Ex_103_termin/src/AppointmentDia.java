@@ -164,9 +164,11 @@ public class AppointmentDia extends javax.swing.JDialog {
             this.dispose();
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(this, "Das einegegebene Datum ist nicht möglich!");
-
         }
     }//GEN-LAST:event_btaddActionPerformed
+    public Appointment getAppointment() {
+        return appointment;
+    }
 
     public static void main(String args[]) {
         try {

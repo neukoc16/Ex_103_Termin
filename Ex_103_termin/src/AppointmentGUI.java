@@ -1,5 +1,6 @@
 
 import java.io.File;
+import javax.swing.JOptionPane;
 
 public class AppointmentGUI extends javax.swing.JFrame {
 
@@ -8,9 +9,12 @@ public class AppointmentGUI extends javax.swing.JFrame {
 
     public AppointmentGUI() {
         initComponents();
-        try{
-
+        try {
+            model.load(file);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Konnte keine Items laden!");
         }
+        lilist.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -54,6 +58,11 @@ public class AppointmentGUI extends javax.swing.JFrame {
         popupmenu.add(jMenu1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lilist.setComponentPopupMenu(popupmenu);
         jScrollPane2.setViewportView(lilist);
@@ -79,16 +88,41 @@ public class AppointmentGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miaddActionPerformed
-        // TODO add your handling code here:
+        AppointmentDia dia = new AppointmentDia(this, true);
+        dia.setVisible(true);
+        if (dia.getAppointment() != null) {
+            lilist.setSelectedIndex(model.add(dia.getAppointment()));
+        }
     }//GEN-LAST:event_miaddActionPerformed
 
     private void mideleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mideleteActionPerformed
-        // TODO add your handling code here:
+        if (lilist.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(this, "Item zum Löschen auswählen");
+            return;
+        }
+        model.remove(lilist.getSelectedIndices());
     }//GEN-LAST:event_mideleteActionPerformed
 
     private void michangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_michangeActionPerformed
-        // TODO add your handling code here:
+        int idx = lilist.getSelectedIndex();
+        if (idx < 0) {
+            JOptionPane.showMessageDialog(this, "Auszuwähldendes Item auswählen");
+            return;
+        }
+        AppointmentDia dlg = new AppointmentDia(this, true, (Appointment) model.getElementAt(idx));
+        dlg.setVisible(true);
+        if (dlg.getAppointment() != null) {
+            lilist.setSelectedIndex(model.update(idx, dlg.getAppointment()));
+        }
     }//GEN-LAST:event_michangeActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            model.save(file);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Konnte keine Termine laden");
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         try {
