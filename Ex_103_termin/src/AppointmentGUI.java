@@ -1,8 +1,16 @@
 
+import java.io.File;
+
 public class AppointmentGUI extends javax.swing.JFrame {
+
+    AppointmentModel model = new AppointmentModel();
+    File file = new File("./appointments.bin");
 
     public AppointmentGUI() {
         initComponents();
+        try{
+
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -47,11 +55,6 @@ public class AppointmentGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lilist.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         lilist.setComponentPopupMenu(popupmenu);
         jScrollPane2.setViewportView(lilist);
 

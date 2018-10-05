@@ -1,4 +1,12 @@
 
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
@@ -43,5 +51,25 @@ public class AppointmentModel extends AbstractListModel {
         appointments.remove(index);
         fireIntervalRemoved(this, index, index);
         return add(updated);
+    }
+
+    public void save(File f) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
+        for (Appointment appointment : appointments) {
+            oos.writeObject(appointment);
+        }
+        oos.close();
+    }
+
+    public void load(File f) throws FileNotFoundException, IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+            try {
+                Object ap;
+                while ((ap = ois.readObject()) != null) {
+                    add((Appointment) ap);
+                }
+            } catch (EOFException ex) {
+            }
+        }
     }
 }
